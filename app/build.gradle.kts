@@ -53,6 +53,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.countrycodepickercompose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.lifecycle.viewmodel.compose)

@@ -8,15 +8,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.lifecycleScope
 import com.example.windimessenger.presentation.navigation.rememberNavigationState
-import com.example.windimessenger.presentation.screens.AuthScreen
-import com.example.windimessenger.presentation.screens.WinDiMainScreen
+import com.example.windimessenger.presentation.screens.AuthDestination
+import com.example.windimessenger.presentation.screens.WinDiMainDestination
 import com.example.windimessenger.presentation.theme.WinDiMessengerTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
-    private val authState = MutableStateFlow(true)
+    private val authState = MutableStateFlow(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +33,8 @@ class MainActivity : ComponentActivity() {
                 val currentAuthState by authState.collectAsState()
 
                 when (currentAuthState) {
-                    false -> { AuthScreen(navigateState) }
-                    true -> { WinDiMainScreen(navigateState) }
+                    false -> { AuthDestination(navigateState) }
+                    true -> { WinDiMainDestination(navigateState) }
                 }
             }
         }

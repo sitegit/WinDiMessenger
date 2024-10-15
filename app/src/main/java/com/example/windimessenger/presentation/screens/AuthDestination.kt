@@ -7,7 +7,7 @@ import com.example.windimessenger.presentation.navigation.NavigationState
 import com.example.windimessenger.presentation.navigation.Screen
 
 @Composable
-fun AuthScreen(
+fun AuthDestination(
     navigateState: NavigationState
 ) {
     AuthNavGraph(

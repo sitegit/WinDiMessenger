@@ -1,6 +1,5 @@
 package com.example.windimessenger.presentation.screens
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -13,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.windimessenger.presentation.navigation.AppNavGraph
 import com.example.windimessenger.presentation.navigation.NavigationItem
@@ -21,7 +19,7 @@ import com.example.windimessenger.presentation.navigation.NavigationState
 import com.example.windimessenger.presentation.navigation.Screen
 
 @Composable
-fun WinDiMainScreen(
+fun WinDiMainDestination(
     navigateState: NavigationState
 ) {
     Scaffold(
@@ -61,6 +59,7 @@ private fun AppBottomNavigation(
         )
 
         items.forEach { item ->
+
             val isSelected = navBackStackEntry?.destination?.hierarchy?.any {
                 it.route == item.route::class.qualifiedName
             } ?: false
@@ -81,7 +80,7 @@ private fun AppBottomNavigation(
                     selectedTextColor = MaterialTheme.colorScheme.onPrimary,
                     unselectedIconColor = MaterialTheme.colorScheme.onSecondary,
                     unselectedTextColor = MaterialTheme.colorScheme.onSecondary,
-                    indicatorColor = MaterialTheme.colorScheme.onSecondary
+                    indicatorColor = MaterialTheme.colorScheme.secondary
                 )
             )
         }

@@ -1,6 +1,5 @@
 package com.example.windimessenger.presentation.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -14,8 +13,9 @@ class NavigationState(
     fun navigateTo(route: Screen) {
         navHostController.navigate(route) {
             popUpTo(navHostController.graph.findStartDestination().id) {
-                   saveState = true
+                saveState = true
             }
+
             launchSingleTop = true
             restoreState = true
         }

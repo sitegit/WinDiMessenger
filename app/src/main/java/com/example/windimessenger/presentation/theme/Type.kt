@@ -11,7 +11,7 @@ import com.example.windimessenger.R
 // Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(
-        fontFamily = FontFamily(Font(R.font.roboto_regular)),
+        fontFamily = FontFamily(Font(R.font.roboto_medium)),
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
@@ -25,7 +25,7 @@ val Typography = Typography(
         letterSpacing = 0.sp
     ),
     labelSmall = TextStyle(
-        fontFamily = FontFamily(Font(R.font.roboto_medium)),
+        fontFamily = FontFamily(Font(R.font.roboto_regular)),
         fontWeight = FontWeight.Medium,
         fontSize = 11.sp,
         lineHeight = 16.sp,
