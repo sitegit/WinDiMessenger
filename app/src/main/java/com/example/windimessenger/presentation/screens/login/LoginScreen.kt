@@ -1,14 +1,14 @@
-package com.example.windimessenger.presentation.screens
+package com.example.windimessenger.presentation.screens.login
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material3.FloatingActionButton
@@ -24,15 +24,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.windimessenger.presentation.theme.Typography
-import com.rejowan.ccpc.CCPUtils
-import com.rejowan.ccpc.CCPValidator
-import com.rejowan.ccpc.Country
-import com.rejowan.ccpc.CountryCodePicker
+import com.example.windimessenger.presentation.utils.NumberMask
+import com.example.windimessenger.presentation.utils.NumberValidator
+import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
+import java.util.Locale
 
 @Composable
 fun LoginScreen(
@@ -56,24 +56,31 @@ fun ShowCCPWithTextField(
 
     val context = LocalContext.current
     var text by remember { mutableStateOf("") }
-    var country by remember { mutableStateOf(Country.RussianFederation) }
+    var country by remember {
+        mutableStateOf(
+            Country.getCountryByIso(Locale.getDefault().country) ?: Country.RussianFederation
+        )
+    }
 
-    CountryDetection { country = it }
     PhoneInputDescription(title = "Телефон", style = Typography.titleLarge)
     PhoneInputDescription(title = "Проверьте код страны и введите свой номер телефона", style = Typography.bodyLarge)
 
-    val validatePhoneNumber = remember(context) { CCPValidator(context = context) }
+    val validatePhoneNumber = remember(context) { NumberValidator(context = context) }
 
     var isNumberValid: Boolean by rememberSaveable(country, text) {
         mutableStateOf(
-            validatePhoneNumber(number = text, countryCode = country.countryCode)
+           validatePhoneNumber(number = text, countryCode = country.countryCode)
         )
     }
+
+    val numberMask = NumberMask(countryIso = country.countryIso, context = context)
+
 
     OutlinedTextField(
         value = text,
         onValueChange = {
-            text = it
+            val filteredText = it.filter { ch -> ch.isDigit() }
+            text = filteredText
             isNumberValid = validatePhoneNumber(
                 number = it, countryCode = country.countryCode
             )
@@ -105,20 +112,12 @@ fun ShowCCPWithTextField(
                 }
             )
         },
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Phone
+        ),
         isError = !isNumberValid && text.isNotEmpty(),
-        //visualTransformation = CCPTransformer(context, country.countryIso),
+        visualTransformation = numberMask,
     )
-}
-
-@Composable
-private fun CountryDetection(
-    countryListener: (Country) -> Unit
-) {
-    if (!LocalInspectionMode.current) {
-        CCPUtils.getCountryAutomatically(context = LocalContext.current).let {
-            it?.let { countryListener(it) }
-        }
-    }
 }
 
 @Composable
@@ -129,7 +128,7 @@ private fun ColumnScope.NavigateFloatButton(
         onClick = onLoginClick,
         modifier = Modifier
             .align(Alignment.End)
-            .padding(top = 48.dp, end = 16.dp)
+            .padding(top = 64.dp, end = 16.dp)
     ) {
         Icon(imageVector = Icons.AutoMirrored.Filled.Send, contentDescription = null)
     }
@@ -147,4 +146,5 @@ private fun PhoneInputDescription(
         modifier = Modifier.padding(8.dp).fillMaxWidth()
     )
 }
+
 

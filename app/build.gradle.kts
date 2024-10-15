@@ -53,7 +53,8 @@ android {
 }
 
 dependencies {
-    implementation(libs.countrycodepickercompose)
+    implementation("io.michaelrocks:libphonenumber-android:8.13.47")
+
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
