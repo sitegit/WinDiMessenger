@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WinDi Messenger</string>
+    <string name="navigation_item_profile">Профиль</string>
+    <string name="navigation_item_chats">Чаты</string>
 </resources>

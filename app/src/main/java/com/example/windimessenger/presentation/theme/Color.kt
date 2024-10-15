@@ -1,4 +1,4 @@
-package com.example.windimessenger.ui.theme
+package com.example.windimessenger.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
