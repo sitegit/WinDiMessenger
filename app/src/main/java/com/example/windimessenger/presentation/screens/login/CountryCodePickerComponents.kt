@@ -1,5 +1,6 @@
 package com.example.windimessenger.presentation.screens.login
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -143,7 +144,7 @@ fun CountryView(
     showCountryIso: Boolean,
     showCountryName: Boolean,
     showCountryCode: Boolean,
-    showArrow: Boolean,
+    showArrow: Boolean = true,
     itemPadding: Int = 10,
     clipToFull: Boolean = false
 ) {

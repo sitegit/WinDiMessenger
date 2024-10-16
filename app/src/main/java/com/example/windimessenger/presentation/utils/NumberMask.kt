@@ -6,6 +6,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
+import com.google.googlejavaformat.Newlines.count
 import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
 import kotlin.math.absoluteValue
 
@@ -20,15 +21,17 @@ class NumberMask(private val countryIso: String, private val context: Context): 
             val exampleNumber = phoneNumberUtil.getExampleNumberForType(
                 countryCode, PhoneNumberUtil.PhoneNumberType.MOBILE
             )
-            val formattedNumber = phoneNumberUtil.format(exampleNumber, PhoneNumberUtil.PhoneNumberFormat.NATIONAL)
-            val mask = formattedNumber.replace("\\d".toRegex(), "#")
 
-            if (mask.startsWith("# "))  mask.substring(2) else mask
+            val nationalNumber = phoneNumberUtil.getNationalSignificantNumber(exampleNumber)
+
+            val formattedNumber = phoneNumberUtil.format(exampleNumber, PhoneNumberUtil.PhoneNumberFormat.NATIONAL)
+            trimToMatch(nationalNumber, formattedNumber).replace("\\d".toRegex(), "#")
         } catch (e: Exception) {
-            Log.e("NumberMask", "Error getting example number for country code $countryCode", e)
             "##########"
         }
     }
+
+    fun getNumberLength() = mask.count { it == '#' }
 
     override fun filter(text: AnnotatedString): TransformedText {
         var out = ""
@@ -41,6 +44,7 @@ class NumberMask(private val countryIso: String, private val context: Context): 
             out += char
             maskIndex++
         }
+
         return TransformedText(AnnotatedString(out), offsetTranslator())
     }
 
@@ -59,5 +63,31 @@ class NumberMask(private val countryIso: String, private val context: Context): 
         override fun transformedToOriginal(offset: Int): Int {
             return mask.take(offset.absoluteValue).count { it == '#' }
         }
+    }
+
+    private fun trimToMatch(nationalNumber: String, formattedNumber: String): String {
+        var str = ""
+        val nationalNumberLength = nationalNumber.length
+        var count = 0
+        var nIndex = nationalNumber.length - 1
+
+        for (i in formattedNumber.length - 1 downTo 0) {
+            if (count == nationalNumberLength && formattedNumber[i] == '(') {
+                str += formattedNumber[i]
+                break
+            } else if (count == nationalNumberLength) {
+                break
+            }
+
+            if (formattedNumber[i] != nationalNumber[nIndex]) {
+                str += formattedNumber[i]
+            } else {
+                str += formattedNumber[i]
+                nIndex--
+                count++
+            }
+        }
+
+        return str.reversed()
     }
 }

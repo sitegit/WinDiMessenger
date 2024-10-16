@@ -14,7 +14,13 @@ fun AuthDestination(
     AuthNavGraph(
         navHostController = navigateState.navHostController,
         loginScreenContent = {
-            LoginScreen { navigateState.navigateTo(Screen.SignUp) }
+            LoginScreen {
+                navigateState.navigateTo(Screen.Verify(it))
+            }
+        },
+        verifyScreenContent = {
+            VerifyScreen(it)
+            BackHandler { navigateState.navHostController.popBackStack() }
         },
         signUpScreenContent = {
             SignUpScreen { navigateState.navHostController.popBackStack() }

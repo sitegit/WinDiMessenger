@@ -53,8 +53,8 @@ android {
 }
 
 dependencies {
-    implementation("io.michaelrocks:libphonenumber-android:8.13.47")
 
+    implementation(libs.libphonenumber.android)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.lifecycle.viewmodel.compose)

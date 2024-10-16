@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.windimessenger.presentation.navigation.rememberNavigationState
 import com.example.windimessenger.presentation.screens.AuthDestination
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         lifecycleScope.launch {
             delay(3000)
             //authState.value = false

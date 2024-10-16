@@ -16,8 +16,12 @@ sealed class Screen {
     @Serializable
     data object Profile : Screen()
 
+
     @Serializable
     data object Login : Screen()
+
+    @Serializable
+    data class Verify(val number: String) : Screen()
 
     @Serializable
     data object SignUp : Screen()
