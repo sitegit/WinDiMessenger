@@ -1,4 +1,4 @@
-package com.example.windimessenger.presentation.screens.login
+package com.example.windimessenger.presentation.utils
 
 enum class Country(val countryIso: String, val countryName: String, val countryCode: String) {
     Andorra("AD", "Андорра", "+376"), UnitedArabEmirates(

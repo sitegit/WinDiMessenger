@@ -1,5 +1,7 @@
-package com.example.windimessenger.presentation.utils
+package com.example.windimessenger.presentation.theme
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -20,4 +22,8 @@ fun InputDescription(
         textAlign = TextAlign.Center,
         modifier = Modifier.padding(8.dp).fillMaxWidth()
     )
+}
+
+fun showToast(context: Context, message: String) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }

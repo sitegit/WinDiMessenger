@@ -1,6 +1,5 @@
-package com.example.windimessenger.presentation.screens.login
+package com.example.windimessenger.presentation.screens.login.components
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -27,8 +26,10 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.example.windimessenger.presentation.utils.Country
 
 @Composable
 fun CountrySearch(
@@ -141,16 +142,11 @@ fun CountryView(
     country: Country,
     textStyle: TextStyle,
     showFlag: Boolean,
-    showCountryIso: Boolean,
-    showCountryName: Boolean,
     showCountryCode: Boolean,
-    showArrow: Boolean = true,
-    itemPadding: Int = 10,
-    clipToFull: Boolean = false
 ) {
 
     Row(
-        modifier = Modifier.padding(itemPadding.dp),
+        modifier = Modifier.padding(10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -163,43 +159,19 @@ fun CountryView(
             )
         }
 
-        if (showCountryName) {
-            Text(
-                text = country.countryName,
-                modifier = Modifier.padding(end = 10.dp),
-                style = textStyle
-            )
-        }
-
-        if (showCountryIso) {
-            Text(
-                text = "(" + country.countryIso + ")",
-                modifier = Modifier.padding(end = 20.dp),
-                style = textStyle
-            )
-        }
-
-        if (clipToFull) {
-            Spacer(modifier = Modifier.weight(1f))
-        }
-
-
         if (showCountryCode) {
             Text(
                 text = country.countryCode,
                 modifier = Modifier.padding(end = 5.dp),
+                fontWeight = FontWeight.Bold,
                 style = textStyle
             )
         }
 
-        if (showArrow) {
-            Icon(
-                imageVector = Icons.Default.ArrowDropDown,
-                contentDescription = null,
-            )
-        }
-
-
+        Icon(
+            imageVector = Icons.Default.ArrowDropDown,
+            contentDescription = null,
+        )
     }
 
 

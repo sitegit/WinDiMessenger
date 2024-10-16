@@ -1,12 +1,10 @@
 package com.example.windimessenger.presentation.utils
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
-import com.google.googlejavaformat.Newlines.count
 import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
 import kotlin.math.absoluteValue
 

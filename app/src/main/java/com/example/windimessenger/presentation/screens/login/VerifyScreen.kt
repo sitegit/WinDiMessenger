@@ -1,7 +1,6 @@
-package com.example.windimessenger.presentation.screens
+package com.example.windimessenger.presentation.screens.login
 
 import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,14 +8,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,14 +25,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.windimessenger.getApplicationComponent
 import com.example.windimessenger.presentation.theme.Typography
-import com.example.windimessenger.presentation.utils.InputDescription
+import com.example.windimessenger.presentation.theme.InputDescription
 
 @Composable
 fun VerifyScreen(
+    viewModel: LoginViewModel = viewModel(factory = getApplicationComponent().getViewModelFactory()),
     phoneNumber: String
 ) {
     Column(
@@ -48,12 +50,16 @@ fun VerifyScreen(
             title = "Мы отправили SMS с кодом проверки на Ваш телефон $phoneNumber",
             style = Typography.bodyLarge
         )
-        OtpTextField()
+        OtpTextField {
+            viewModel.checkAuthUser(phoneNumber, it)
+        }
     }
 }
 
 @Composable
-private fun ColumnScope.OtpTextField() {
+private fun ColumnScope.OtpTextField(
+    onOtpComplete: (String) -> Unit
+) {
 
     var otpValue by rememberSaveable { mutableStateOf("") }
 
@@ -66,7 +72,14 @@ private fun ColumnScope.OtpTextField() {
         },
         modifier = Modifier.align(Alignment.CenterHorizontally),
         keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.NumberPassword
+            keyboardType = KeyboardType.NumberPassword,
+            imeAction = ImeAction.Done
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                Log.i("okHttp", "1isfdfd")
+                if (otpValue.length == 6) onOtpComplete(otpValue)
+            }
         ),
         decorationBox = {
             Row(

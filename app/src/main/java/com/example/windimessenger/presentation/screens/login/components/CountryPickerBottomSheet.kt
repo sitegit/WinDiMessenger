@@ -1,4 +1,4 @@
-package com.example.windimessenger.presentation.screens.login
+package com.example.windimessenger.presentation.screens.login.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import com.example.windimessenger.presentation.utils.Country
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

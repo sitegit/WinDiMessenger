@@ -1,4 +1,4 @@
-package com.example.windimessenger.presentation.screens.login
+package com.example.windimessenger.presentation.screens.login.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import com.example.windimessenger.presentation.utils.Country
 
 @Composable
 fun CountryCodePicker(
@@ -44,13 +45,8 @@ fun CountryCodePicker(
         CountryView(
             country = country,
             showFlag = true,
-            showCountryIso = false,
-            showCountryName = false,
             showCountryCode = true,
-            showArrow = false,
-            textStyle = textStyle,
-            itemPadding = itemPadding,
-            clipToFull = false
+            textStyle = textStyle
         )
 
         if (isPickerOpen) {
