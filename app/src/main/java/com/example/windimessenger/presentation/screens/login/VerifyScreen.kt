@@ -10,14 +10,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -25,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -33,12 +37,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.windimessenger.getApplicationComponent
 import com.example.windimessenger.presentation.theme.Typography
 import com.example.windimessenger.presentation.theme.InputDescription
+import com.example.windimessenger.presentation.theme.showToast
 
 @Composable
 fun VerifyScreen(
     viewModel: LoginViewModel = viewModel(factory = getApplicationComponent().getViewModelFactory()),
-    phoneNumber: String
+    phoneNumber: String,
+    onAuth: () -> Unit
 ) {
+    val state: LoginState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -52,6 +61,19 @@ fun VerifyScreen(
         )
         OtpTextField {
             viewModel.checkAuthUser(phoneNumber, it)
+        }
+
+        when (val currentState = state) {
+            is LoginState.Error -> showToast(context, currentState.message)
+            LoginState.Idle -> {}
+            LoginState.Loading -> CircularProgressIndicator(modifier = Modifier.padding(32.dp))
+            is LoginState.Success -> {
+                if (currentState.isValidAuthCode) {
+                    viewModel.authorizeUser()
+                } else {
+                    onAuth()
+                }
+            }
         }
     }
 }

@@ -24,7 +24,7 @@ sealed class Screen {
     data class Verify(val number: String) : Screen()
 
     @Serializable
-    data object SignUp : Screen()
+    data class SignUp(val number: String) : Screen()
 }
 
 

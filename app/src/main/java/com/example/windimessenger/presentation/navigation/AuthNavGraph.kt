@@ -11,7 +11,7 @@ fun AuthNavGraph(
     navHostController: NavHostController,
     loginScreenContent: @Composable () -> Unit,
     verifyScreenContent: @Composable (String) -> Unit,
-    signUpScreenContent: @Composable () -> Unit
+    signUpScreenContent: @Composable (String) -> Unit
 ) {
     NavHost(
         navController = navHostController,
@@ -25,7 +25,8 @@ fun AuthNavGraph(
             verifyScreenContent(verify.number)
         }
         composable<Screen.SignUp> {
-            signUpScreenContent()
+            val signUp: Screen.SignUp = it.toRoute()
+            signUpScreenContent(signUp.number)
         }
     }
 }

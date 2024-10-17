@@ -23,19 +23,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        lifecycleScope.launch {
-            delay(3000)
-            //authState.value = false
 
-//            try {
-//                val result = ApiFactory.apiService.sendAuthCode(AuthCodeRequestDto("+9100000000"))
-//                Log.i("MyTag", result.isSuccess.toString())
-//            } catch (e: Exception) {
-//                withContext(Dispatchers.Main) {
-//                    // Обработка ошибки
-//                    Log.i("MyTag","Error: ${e.message}")
-//                }
-//            }
+        lifecycleScope.launch {
+
         }
 
         setContent {

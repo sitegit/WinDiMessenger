@@ -10,10 +10,11 @@ class NavigationState(
     val navHostController: NavHostController
 ) {
 
-    fun navigateTo(route: Screen) {
+    fun navigateTo(route: Screen, saveState: Boolean = true) {
         navHostController.navigate(route) {
             popUpTo(navHostController.graph.findStartDestination().id) {
-                saveState = true
+                this.saveState = saveState
+                this.inclusive = inclusive
             }
 
             launchSingleTop = true

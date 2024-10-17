@@ -7,6 +7,7 @@ import com.example.windimessenger.presentation.navigation.NavigationState
 import com.example.windimessenger.presentation.navigation.Screen
 import com.example.windimessenger.presentation.screens.login.LoginScreen
 import com.example.windimessenger.presentation.screens.login.VerifyScreen
+import com.example.windimessenger.presentation.screens.signup.SignUpScreen
 
 @Composable
 fun AuthDestination(
@@ -15,16 +16,14 @@ fun AuthDestination(
     AuthNavGraph(
         navHostController = navigateState.navHostController,
         loginScreenContent = {
-            LoginScreen {
-                navigateState.navigateTo(Screen.Verify(it))
-            }
+            LoginScreen { navigateState.navigateTo(Screen.Verify(it)) }
         },
         verifyScreenContent = {
-            VerifyScreen(phoneNumber = it)
+            VerifyScreen(phoneNumber = it) { navigateState.navigateTo(Screen.SignUp(it), false) }
             BackHandler { navigateState.navHostController.popBackStack() }
         },
         signUpScreenContent = {
-            SignUpScreen { navigateState.navHostController.popBackStack() }
+            SignUpScreen(phoneNumber = it)
             BackHandler { navigateState.navHostController.popBackStack() }
         }
     )
