@@ -4,10 +4,10 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.windimessenger.domain.CheckAuthUseCase
-import com.example.windimessenger.domain.entity.Result
 import com.example.windimessenger.domain.SendAuthCodeUseCase
+import com.example.windimessenger.domain.entity.ApiResponse
 import com.example.windimessenger.domain.entity.CheckAuthResponse
-import com.example.windimessenger.domain.entity.SendAuthCodeResult
+import com.example.windimessenger.domain.entity.Result
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,11 +28,10 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = LoginState.Loading
 
-            when (val result: Result<SendAuthCodeResult> = sendAuthCodeUseCase(phone)) {
+            when (val result: Result<ApiResponse<Boolean>> = sendAuthCodeUseCase(phone)) {
                 is Result.Success -> {
-                    val data = result.data as SendAuthCodeResult.Success
-                    Log.i("MyTag", data.isSuccess.toString())
-                    _uiState.value = LoginState.Success(data.isSuccess, phone)
+                    val data = result.data as ApiResponse.Success<Boolean>
+                    _uiState.value = LoginState.Success(data.data, phone)
                 }
                 is Result.Error -> {
                     _uiState.value = LoginState.Error(result.message)
@@ -45,11 +44,14 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = LoginState.Loading
 
-            when (val result: Result<CheckAuthResponse> = checkAuthUseCase(phone, code)) {
+            when (val result: Result<ApiResponse<CheckAuthResponse>> = checkAuthUseCase(phone, code)) {
                 is Result.Success -> {
-                    _uiState.value = LoginState.Success(result.data.isUserExists, phone)
+                    val data = result.data as ApiResponse.Success<CheckAuthResponse>
+                    Log.i( "MyTag", " -------------------${data.data.isUserExists}")
+                    _uiState.value = LoginState.Success(data.data.isUserExists, phone)
                 }
                 is Result.Error -> {
+                    Log.i( "MyTag", result.message)
                     _uiState.value = LoginState.Error(result.message)
                 }
             }

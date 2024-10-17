@@ -6,10 +6,14 @@ import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
-
 @Singleton
 @Component(
-    modules = [DataModule::class, ViewModelModule::class]
+    modules = [
+        DataModule::class,
+        ViewModelModule::class,
+        ApiModule::class,
+        OkHttpClientModule::class
+    ]
 )
 interface WinDiApplicationComponent {
 

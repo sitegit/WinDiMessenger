@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.windimessenger.getApplicationComponent
+import com.example.windimessenger.presentation.theme.InputDescription
 import com.example.windimessenger.presentation.theme.Typography
 
 @Composable
@@ -45,6 +46,9 @@ fun SignUpScreen(
         ) {
             var name by rememberSaveable { mutableStateOf("") }
             var username by rememberSaveable { mutableStateOf("") }
+
+            InputDescription(title = "Телефон: $phoneNumber", style = Typography.titleLarge)
+            InputDescription(title = "Заполните информацию о себе", style = Typography.bodyLarge)
 
             RegistrationTextField(text = name, label = "Введите имя") { name = it }
             RegistrationTextField(text = username, label = "Введите никнейм", isUserName = true) { username = it }

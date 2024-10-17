@@ -1,5 +1,6 @@
 package com.example.windimessenger.domain
 
+import com.example.windimessenger.domain.entity.ApiResponse
 import com.example.windimessenger.domain.entity.Result
 import com.example.windimessenger.domain.entity.UserRegisterResponse
 import java.io.IOException
@@ -9,18 +10,12 @@ class RegisterUserUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ) {
 
-    suspend operator fun invoke(phone: String, name: String, username: String): Result<UserRegisterResponse> {
+    suspend operator fun invoke(phone: String, name: String, username: String): Result<ApiResponse<UserRegisterResponse>> {
         return try {
             when (val result = authRepository.registerUser(phone, name, username)) {
-                is Result.Success -> result
-                is Result.Error -> {
-                    when (result.errorCode) {
-                        422 -> Result.Error(422, "Validation error: ${result.message}")
-                        400 -> Result.Error(400, "Bad Request: ${result.message}")
-                        500 -> Result.Error(500, "Server error: ${result.message}")
-                        else -> Result.Error(result.errorCode, "Unknown error: ${result.message}")
-                    }
-                }
+                is ApiResponse.Error ->  Result.Error(message = result.detail.message)
+                is ApiResponse.Success -> Result.Success(data = ApiResponse.Success(result.data))
+                is ApiResponse.ValidationError -> Result.Error(message = result.detail[0].msg)
             }
         } catch (e: IOException) {
             Result.Error(-1, "Network error: ${e.message}")

@@ -65,7 +65,7 @@ fun LoginScreen(
                 viewModel.resetState()
             }
             is LoginState.Error -> {
-                showToast(context, "Не удалось отправить номер, проверьте подключение к интернету")
+                showToast(context, currentState.message)
             }
         }
     }

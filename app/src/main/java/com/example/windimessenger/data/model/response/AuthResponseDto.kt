@@ -1,8 +1,8 @@
-package com.example.windimessenger.data.model
+package com.example.windimessenger.data.model.response
 
 import com.google.gson.annotations.SerializedName
 
-class UserRegisterResponseDto(
+class AuthResponseDto(
     @SerializedName("refresh_token") val refreshToken: String,
     @SerializedName("access_token") val accessToken: String,
     @SerializedName("user_id") val userId: Int

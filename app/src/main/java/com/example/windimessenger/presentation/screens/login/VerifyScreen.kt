@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,6 +20,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -62,18 +65,21 @@ fun VerifyScreen(
         OtpTextField {
             viewModel.checkAuthUser(phoneNumber, it)
         }
+        Box(
+            modifier = Modifier.fillMaxWidth().height(20.dp).padding(top = 16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            if (state is LoginState.Loading) {
+                LinearProgressIndicator()
+            }
+        }
 
         when (val currentState = state) {
             is LoginState.Error -> showToast(context, currentState.message)
-            LoginState.Idle -> {}
-            LoginState.Loading -> CircularProgressIndicator(modifier = Modifier.padding(32.dp))
             is LoginState.Success -> {
-                if (currentState.isValidAuthCode) {
-                    viewModel.authorizeUser()
-                } else {
-                    onAuth()
-                }
+                if (currentState.isValidAuthCode) viewModel.authorizeUser() else onAuth()
             }
+            else -> {}
         }
     }
 }

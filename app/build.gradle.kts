@@ -54,6 +54,7 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.datastore.preferences)
     implementation(libs.logging.interceptor)
     implementation(libs.libphonenumber.android)
     implementation(libs.androidx.navigation.compose)

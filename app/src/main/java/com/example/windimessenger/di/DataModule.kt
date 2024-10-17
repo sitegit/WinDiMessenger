@@ -1,8 +1,14 @@
 package com.example.windimessenger.di
 
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import com.example.windimessenger.data.AuthRepositoryImpl
-import com.example.windimessenger.data.network.ApiFactory
-import com.example.windimessenger.data.network.ApiService
+import com.example.windimessenger.data.authentication.TokenManager
 import com.example.windimessenger.domain.AuthRepository
 import dagger.Binds
 import dagger.Module
@@ -20,8 +26,19 @@ interface DataModule {
 
         @Singleton
         @Provides
-        fun provideApiService(): ApiService {
-            return ApiFactory.apiService
+        fun provideDataStore(context: Context): DataStore<Preferences> {
+            return PreferenceDataStoreFactory.create(
+                corruptionHandler = ReplaceFileCorruptionHandler(
+                    produceNewData = { emptyPreferences() }
+                ),
+                produceFile = { context.preferencesDataStoreFile("settings") }
+            )
+        }
+
+        @Singleton
+        @Provides
+        fun provideTokenManager(dataStore: DataStore<Preferences>): TokenManager {
+            return TokenManager(dataStore)
         }
     }
 }
