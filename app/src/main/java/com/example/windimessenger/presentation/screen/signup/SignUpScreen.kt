@@ -1,4 +1,4 @@
-package com.example.windimessenger.presentation.screens.signup
+package com.example.windimessenger.presentation.screen.signup
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,23 +14,30 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.windimessenger.getApplicationComponent
+import com.example.windimessenger.presentation.screen.login.LoginState
 import com.example.windimessenger.presentation.theme.InputDescription
 import com.example.windimessenger.presentation.theme.Typography
+import com.example.windimessenger.presentation.theme.showToast
 
 @Composable
 fun SignUpScreen(
     phoneNumber: String,
     viewModel: SignUpViewModel = viewModel(factory = getApplicationComponent().getViewModelFactory())
 ) {
+    val state: SignUpState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -55,6 +62,13 @@ fun SignUpScreen(
             RegisterButton(name = name, username = username) {
                 viewModel.registerUser(phoneNumber, name, username)
             }
+        }
+
+        when (val currentState = state) {
+            is SignUpState.Error -> { showToast(context, currentState.message) }
+            SignUpState.Idle -> {}
+            SignUpState.Loading -> {}
+            SignUpState.Success -> { viewModel.checkAuth() }
         }
     }
 }

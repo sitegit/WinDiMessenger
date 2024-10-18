@@ -1,13 +1,13 @@
-package com.example.windimessenger.presentation.screens
+package com.example.windimessenger.presentation.screen
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import com.example.windimessenger.presentation.navigation.AuthNavGraph
 import com.example.windimessenger.presentation.navigation.NavigationState
 import com.example.windimessenger.presentation.navigation.Screen
-import com.example.windimessenger.presentation.screens.login.LoginScreen
-import com.example.windimessenger.presentation.screens.login.VerifyScreen
-import com.example.windimessenger.presentation.screens.signup.SignUpScreen
+import com.example.windimessenger.presentation.screen.login.LoginScreen
+import com.example.windimessenger.presentation.screen.login.VerifyScreen
+import com.example.windimessenger.presentation.screen.signup.SignUpScreen
 
 @Composable
 fun AuthDestination(

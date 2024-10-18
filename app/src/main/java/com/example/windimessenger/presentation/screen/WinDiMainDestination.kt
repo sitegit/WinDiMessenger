@@ -1,4 +1,4 @@
-package com.example.windimessenger.presentation.screens
+package com.example.windimessenger.presentation.screen
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.material3.Icon
@@ -17,6 +17,10 @@ import com.example.windimessenger.presentation.navigation.AppNavGraph
 import com.example.windimessenger.presentation.navigation.NavigationItem
 import com.example.windimessenger.presentation.navigation.NavigationState
 import com.example.windimessenger.presentation.navigation.Screen
+import com.example.windimessenger.presentation.screen.chat.ChatsScreen
+import com.example.windimessenger.presentation.screen.profile.EditProfileScreen
+import com.example.windimessenger.presentation.screen.chat.MessagesScreen
+import com.example.windimessenger.presentation.screen.profile.ProfileScreen
 
 @Composable
 fun WinDiMainDestination(
@@ -34,9 +38,9 @@ fun WinDiMainDestination(
                 MessagesScreen {  }
             },
             profileScreenContent = {
-                ProfileScreen {
-                    navigateState.navigateTo(Screen.EditProfile)
-                }
+                ProfileScreen(
+                    onEditProfileClickListener = { navigateState.navigateTo(Screen.EditProfile) }
+                )
             },
             editProfileScreenContent = {
                 EditProfileScreen { }

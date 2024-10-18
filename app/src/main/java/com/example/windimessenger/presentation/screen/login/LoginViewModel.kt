@@ -1,13 +1,14 @@
-package com.example.windimessenger.presentation.screens.login
+package com.example.windimessenger.presentation.screen.login
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.windimessenger.domain.CheckAuthUseCase
-import com.example.windimessenger.domain.SendAuthCodeUseCase
+import com.example.windimessenger.domain.usecase.CheckAuthUseCase
+import com.example.windimessenger.domain.usecase.SendAuthCodeUseCase
 import com.example.windimessenger.domain.entity.ApiResponse
 import com.example.windimessenger.domain.entity.CheckAuthResponse
 import com.example.windimessenger.domain.entity.Result
+import com.example.windimessenger.domain.usecase.CheckAuthStateUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
     private val sendAuthCodeUseCase: SendAuthCodeUseCase,
-    private val checkAuthUseCase: CheckAuthUseCase
+    private val checkAuthUseCase: CheckAuthUseCase,
+    private val checkAuthStateUseCase: CheckAuthStateUseCase
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<LoginState> = MutableStateFlow(LoginState.Idle)
@@ -58,8 +60,10 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun authorizeUser() {
-
+    fun checkAuth() {
+        viewModelScope.launch {
+            checkAuthStateUseCase()
+        }
     }
 
     fun resetState() {

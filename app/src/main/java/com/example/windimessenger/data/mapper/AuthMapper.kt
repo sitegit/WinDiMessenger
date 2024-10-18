@@ -6,14 +6,14 @@ import com.example.windimessenger.domain.entity.CheckAuthResponse
 import com.example.windimessenger.domain.entity.UserRegisterResponse
 
 fun CheckAuthResponseDto.toEntity() = CheckAuthResponse(
-    refreshToken = refreshToken,
-    accessToken = accessToken,
-    userId = userId,
+    refreshToken = refreshToken ?: "",
+    accessToken = accessToken ?: "",
+    userId = userId ?: -1,
     isUserExists = isUserExists
 )
 
 fun AuthResponseDto.toEntity() = UserRegisterResponse(
-    refreshToken = refreshToken,
-    accessToken = accessToken,
-    userId = userId
+    refreshToken = refreshToken ?: "",
+    accessToken = accessToken ?: "",
+    userId = userId ?: -1
 )

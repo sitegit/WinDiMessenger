@@ -1,4 +1,4 @@
-package com.example.windimessenger.presentation.screens
+package com.example.windimessenger.presentation.screen.chat
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import com.example.windimessenger.presentation.theme.Typography
 
 @Composable
-fun ProfileScreen(
-    onEditProfileClickListener: () -> Unit
+fun ChatsScreen(
+    onMessagesClickListener: () -> Unit
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -19,9 +19,9 @@ fun ProfileScreen(
     ) {
         Text(
             modifier = Modifier.clickable {
-                onEditProfileClickListener()
+                onMessagesClickListener()
             },
-            text = "ProfileScreen",
+            text = "ChatsScreen",
             style = Typography.titleLarge
         )
     }

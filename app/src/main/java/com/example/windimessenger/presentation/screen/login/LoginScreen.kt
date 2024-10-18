@@ -1,4 +1,4 @@
-package com.example.windimessenger.presentation.screens.login
+package com.example.windimessenger.presentation.screen.login
 
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
@@ -33,7 +33,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.windimessenger.getApplicationComponent
-import com.example.windimessenger.presentation.screens.login.components.CountryCodePicker
+import com.example.windimessenger.presentation.screen.login.components.CountryCodePicker
 import com.example.windimessenger.presentation.theme.InputDescription
 import com.example.windimessenger.presentation.theme.Typography
 import com.example.windimessenger.presentation.theme.showToast

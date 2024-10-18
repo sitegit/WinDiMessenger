@@ -1,4 +1,4 @@
-package com.example.windimessenger.presentation.screens.login.components
+package com.example.windimessenger.presentation.screen.login.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

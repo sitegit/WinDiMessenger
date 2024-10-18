@@ -1,4 +1,4 @@
-package com.example.windimessenger.domain
+package com.example.windimessenger.domain.entity
 
 sealed class AuthState {
 

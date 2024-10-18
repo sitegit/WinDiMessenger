@@ -26,8 +26,8 @@ class AuthAuthenticator @Inject constructor(
                 if (newSessionResponse.isSuccessful && newSessionResponse.body() != null) {
                     newSessionResponse.body()?.let { body ->
                         runBlocking {
-                            tokenManager.saveAccessJwt(body.accessToken)
-                            tokenManager.saveRefreshJwt(body.refreshToken)
+                            tokenManager.saveAccessJwt(body.accessToken ?: "")
+                            tokenManager.saveRefreshJwt(body.refreshToken ?: "")
                         }
                         body.accessToken
                     }

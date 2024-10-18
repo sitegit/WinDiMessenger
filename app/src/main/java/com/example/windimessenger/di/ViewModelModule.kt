@@ -2,8 +2,10 @@ package com.example.windimessenger.di
 
 import androidx.lifecycle.ViewModel
 import com.example.windimessenger.presentation.MainViewModel
-import com.example.windimessenger.presentation.screens.login.LoginViewModel
-import com.example.windimessenger.presentation.screens.signup.SignUpViewModel
+import com.example.windimessenger.presentation.screen.chat.ChatViewModel
+import com.example.windimessenger.presentation.screen.login.LoginViewModel
+import com.example.windimessenger.presentation.screen.profile.ProfileViewModel
+import com.example.windimessenger.presentation.screen.signup.SignUpViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -24,5 +26,15 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(SignUpViewModel::class)
     @Binds
-    fun signUpViewModel(viewModel: SignUpViewModel): ViewModel
+    fun bindSignUpViewModel(viewModel: SignUpViewModel): ViewModel
+
+    @IntoMap
+    @ViewModelKey(ChatViewModel::class)
+    @Binds
+    fun bindChatViewModel(viewModel: ChatViewModel): ViewModel
+
+    @IntoMap
+    @ViewModelKey(ProfileViewModel::class)
+    @Binds
+    fun bindProfileViewModel(viewModel: ProfileViewModel): ViewModel
 }

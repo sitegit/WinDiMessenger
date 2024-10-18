@@ -1,4 +1,4 @@
-package com.example.windimessenger.presentation.screens
+package com.example.windimessenger.presentation.screen.chat
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import com.example.windimessenger.presentation.theme.Typography
 
 @Composable
-fun EditProfileScreen(
+fun MessagesScreen(
     onBackPressedListener: () -> Unit
 ) {
     Box(
@@ -17,7 +17,7 @@ fun EditProfileScreen(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "EditProfileScreen",
+            text = "MessagesScreen",
             style = Typography.titleLarge
         )
     }

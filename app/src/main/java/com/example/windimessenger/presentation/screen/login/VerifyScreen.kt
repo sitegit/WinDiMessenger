@@ -1,4 +1,4 @@
-package com.example.windimessenger.presentation.screens.login
+package com.example.windimessenger.presentation.screen.login
 
 import android.util.Log
 import androidx.compose.foundation.border
@@ -19,7 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,7 +45,7 @@ import com.example.windimessenger.presentation.theme.showToast
 fun VerifyScreen(
     viewModel: LoginViewModel = viewModel(factory = getApplicationComponent().getViewModelFactory()),
     phoneNumber: String,
-    onAuth: () -> Unit
+    onNavigateRegister: () -> Unit
 ) {
     val state: LoginState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -77,7 +76,7 @@ fun VerifyScreen(
         when (val currentState = state) {
             is LoginState.Error -> showToast(context, currentState.message)
             is LoginState.Success -> {
-                if (currentState.isValidAuthCode) viewModel.authorizeUser() else onAuth()
+                if (currentState.isValidAuthCode) viewModel.checkAuth() else onNavigateRegister()
             }
             else -> {}
         }

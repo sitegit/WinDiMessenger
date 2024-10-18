@@ -1,4 +1,4 @@
-package com.example.windimessenger.presentation.screens.login
+package com.example.windimessenger.presentation.screen.login
 
 sealed class LoginState {
     data object Idle : LoginState()

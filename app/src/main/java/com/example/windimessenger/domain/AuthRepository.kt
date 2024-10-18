@@ -1,8 +1,10 @@
 package com.example.windimessenger.domain
 
 import com.example.windimessenger.domain.entity.ApiResponse
+import com.example.windimessenger.domain.entity.AuthState
 import com.example.windimessenger.domain.entity.CheckAuthResponse
 import com.example.windimessenger.domain.entity.UserRegisterResponse
+import kotlinx.coroutines.flow.StateFlow
 
 interface AuthRepository {
 
@@ -11,4 +13,10 @@ interface AuthRepository {
     suspend fun checkAuthCode(phone: String, code: String): ApiResponse<CheckAuthResponse>
 
     suspend fun registerUser(phone: String, name: String, username: String): ApiResponse<UserRegisterResponse>
+
+    fun getAuthStateFlow(): StateFlow<AuthState>
+
+    suspend fun checkAuthState()
+
+    suspend fun logout()
 }
