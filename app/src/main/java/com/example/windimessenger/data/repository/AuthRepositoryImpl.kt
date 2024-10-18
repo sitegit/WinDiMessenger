@@ -1,4 +1,4 @@
-package com.example.windimessenger.data
+package com.example.windimessenger.data.repository
 
 import android.util.Log
 import com.example.windimessenger.data.authentication.TokenManager
@@ -10,12 +10,12 @@ import com.example.windimessenger.data.model.response.AuthResponseDto
 import com.example.windimessenger.data.model.response.CheckAuthResponseDto
 import com.example.windimessenger.data.model.response.SendAuthCodeResponseDto
 import com.example.windimessenger.data.network.AuthService
-import com.example.windimessenger.domain.AuthRepository
-import com.example.windimessenger.domain.entity.ApiResponse
-import com.example.windimessenger.domain.entity.AuthState
-import com.example.windimessenger.domain.entity.CheckAuthResponse
-import com.example.windimessenger.domain.entity.ErrorDetail
-import com.example.windimessenger.domain.entity.UserRegisterResponse
+import com.example.windimessenger.domain.repository.AuthRepository
+import com.example.windimessenger.domain.entity.network.ApiResponse
+import com.example.windimessenger.domain.entity.network.AuthState
+import com.example.windimessenger.domain.entity.network.CheckAuthResponse
+import com.example.windimessenger.domain.entity.network.ErrorDetail
+import com.example.windimessenger.domain.entity.network.UserRegisterResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow

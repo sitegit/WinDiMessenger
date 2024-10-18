@@ -4,8 +4,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ExitToApp
@@ -21,11 +23,12 @@ import com.example.windimessenger.presentation.theme.Typography
 
 @Composable
 fun ProfileScreen(
+    paddingValues: PaddingValues,
     onEditProfileClickListener: () -> Unit,
     viewModel: ProfileViewModel = viewModel(factory = getApplicationComponent().getViewModelFactory())
 ) {
     Column(
-        modifier = Modifier.fillMaxSize().statusBarsPadding()
+        modifier = Modifier.fillMaxSize().padding(paddingValues).statusBarsPadding()
     ) {
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomEnd) {
             Icon(
@@ -43,7 +46,7 @@ fun ProfileScreen(
         ) {
             Text(
                 modifier = Modifier.clickable {
-                    viewModel.logoutApp()
+                    onEditProfileClickListener()
                 },
                 text = "ProfileScreen",
                 style = Typography.titleLarge

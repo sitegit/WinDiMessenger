@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.windimessenger.domain.usecase.CheckAuthUseCase
 import com.example.windimessenger.domain.usecase.SendAuthCodeUseCase
-import com.example.windimessenger.domain.entity.ApiResponse
-import com.example.windimessenger.domain.entity.CheckAuthResponse
-import com.example.windimessenger.domain.entity.Result
+import com.example.windimessenger.domain.entity.network.ApiResponse
+import com.example.windimessenger.domain.entity.network.CheckAuthResponse
+import com.example.windimessenger.domain.entity.network.Result
 import com.example.windimessenger.domain.usecase.CheckAuthStateUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

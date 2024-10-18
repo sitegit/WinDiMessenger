@@ -1,9 +1,9 @@
-package com.example.windimessenger.domain
+package com.example.windimessenger.domain.repository
 
-import com.example.windimessenger.domain.entity.ApiResponse
-import com.example.windimessenger.domain.entity.AuthState
-import com.example.windimessenger.domain.entity.CheckAuthResponse
-import com.example.windimessenger.domain.entity.UserRegisterResponse
+import com.example.windimessenger.domain.entity.network.ApiResponse
+import com.example.windimessenger.domain.entity.network.AuthState
+import com.example.windimessenger.domain.entity.network.CheckAuthResponse
+import com.example.windimessenger.domain.entity.network.UserRegisterResponse
 import kotlinx.coroutines.flow.StateFlow
 
 interface AuthRepository {

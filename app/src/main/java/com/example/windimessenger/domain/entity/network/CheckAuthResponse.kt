@@ -1,4 +1,4 @@
-package com.example.windimessenger.domain.entity
+package com.example.windimessenger.domain.entity.network
 
 data class CheckAuthResponse(
     val refreshToken: String,

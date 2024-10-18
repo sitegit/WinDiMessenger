@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.windimessenger.presentation.navigation.AppNavGraph
@@ -18,32 +19,47 @@ import com.example.windimessenger.presentation.navigation.NavigationItem
 import com.example.windimessenger.presentation.navigation.NavigationState
 import com.example.windimessenger.presentation.navigation.Screen
 import com.example.windimessenger.presentation.screen.chat.ChatsScreen
-import com.example.windimessenger.presentation.screen.profile.EditProfileScreen
 import com.example.windimessenger.presentation.screen.chat.MessagesScreen
+import com.example.windimessenger.presentation.screen.profile.EditProfileScreen
 import com.example.windimessenger.presentation.screen.profile.ProfileScreen
 
 @Composable
 fun WinDiMainDestination(
     navigateState: NavigationState
 ) {
+    val navBackStackEntry by navigateState.navHostController.currentBackStackEntryAsState()
+    val showBottomBar = navBackStackEntry?.destination?.hierarchy?.any {
+        it.route == Screen.Chats::class.qualifiedName || it.route == Screen.Profile::class.qualifiedName
+    } ?: false
+
     Scaffold(
-        bottomBar = { AppBottomNavigation(navigateState) }
+        bottomBar = {
+            if (showBottomBar) AppBottomNavigation(navigateState, navBackStackEntry)
+        }
     ) { paddingValues ->
         AppNavGraph(
             navHostController = navigateState.navHostController,
             chatsScreenContent = {
-                ChatsScreen { navigateState.navigateTo(Screen.Messages) }
+                ChatsScreen(
+                    paddingValues = paddingValues,
+                    onMessagesClickListener = { navigateState.navigateTo(Screen.Messages(id = it)) }
+                )
             },
             messagesScreenContent = {
-                MessagesScreen {  }
+                MessagesScreen(
+                    chatId = it,
+                    paddingValues = paddingValues,
+                    onBackPressedListener = {}
+                )
             },
             profileScreenContent = {
                 ProfileScreen(
+                    paddingValues = paddingValues,
                     onEditProfileClickListener = { navigateState.navigateTo(Screen.EditProfile) }
                 )
             },
             editProfileScreenContent = {
-                EditProfileScreen { }
+                EditProfileScreen(paddingValues = paddingValues) { }
                 BackHandler { navigateState.navigateTo(Screen.Profile) }
             }
         )
@@ -52,10 +68,10 @@ fun WinDiMainDestination(
 
 @Composable
 private fun AppBottomNavigation(
-    navigateState: NavigationState
+    navigateState: NavigationState,
+    navBackStackEntry: NavBackStackEntry?
 ) {
     NavigationBar {
-        val navBackStackEntry by navigateState.navHostController.currentBackStackEntryAsState()
 
         val items = listOf(
             NavigationItem.Chats,

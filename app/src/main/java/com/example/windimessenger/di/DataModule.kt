@@ -7,9 +7,13 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.example.windimessenger.data.AuthRepositoryImpl
+import com.example.windimessenger.data.repository.AuthRepositoryImpl
 import com.example.windimessenger.data.authentication.TokenManager
-import com.example.windimessenger.domain.AuthRepository
+import com.example.windimessenger.data.local.ChatsGenerator
+import com.example.windimessenger.data.repository.ChatRepositoryImpl
+import com.example.windimessenger.domain.repository.AuthRepository
+import com.example.windimessenger.domain.repository.ChatRepository
+import com.github.javafaker.Faker
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -20,7 +24,11 @@ interface DataModule {
 
     @Singleton
     @Binds
-    fun bindAuthRepository(authRepositoryImp: AuthRepositoryImpl): AuthRepository
+    fun bindAuthRepository(authRepositoryImpl: AuthRepositoryImpl): AuthRepository
+
+    @Singleton
+    @Binds
+    fun bindChatRepository(chatRepositoryImpl: ChatRepositoryImpl): ChatRepository
 
     companion object {
 
@@ -40,5 +48,13 @@ interface DataModule {
         fun provideTokenManager(dataStore: DataStore<Preferences>): TokenManager {
             return TokenManager(dataStore)
         }
+
+        @Singleton
+        @Provides
+        fun provideFaker() = Faker()
+
+        @Singleton
+        @Provides
+        fun provideChatGenerator(faker: Faker) = ChatsGenerator(faker)
     }
 }

@@ -11,7 +11,7 @@ sealed class Screen {
     data object EditProfile : Screen()
 
     @Serializable
-    data object Messages : Screen()
+    data class Messages(val id: Int) : Screen()
 
     @Serializable
     data object Profile : Screen()

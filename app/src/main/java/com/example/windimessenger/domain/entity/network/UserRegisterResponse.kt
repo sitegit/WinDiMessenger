@@ -1,4 +1,4 @@
-package com.example.windimessenger.domain.entity
+package com.example.windimessenger.domain.entity.network
 
 class UserRegisterResponse(
     val refreshToken: String,

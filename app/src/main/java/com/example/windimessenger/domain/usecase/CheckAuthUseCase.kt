@@ -1,9 +1,9 @@
 package com.example.windimessenger.domain.usecase
 
-import com.example.windimessenger.domain.AuthRepository
-import com.example.windimessenger.domain.entity.ApiResponse
-import com.example.windimessenger.domain.entity.CheckAuthResponse
-import com.example.windimessenger.domain.entity.Result
+import com.example.windimessenger.domain.repository.AuthRepository
+import com.example.windimessenger.domain.entity.network.ApiResponse
+import com.example.windimessenger.domain.entity.network.CheckAuthResponse
+import com.example.windimessenger.domain.entity.network.Result
 import java.io.IOException
 import javax.inject.Inject
 

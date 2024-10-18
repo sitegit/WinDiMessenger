@@ -4,10 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.windimessenger.domain.entity.AuthState
+import com.example.windimessenger.domain.entity.network.AuthState
 import com.example.windimessenger.getApplicationComponent
 import com.example.windimessenger.presentation.navigation.rememberNavigationState
 import com.example.windimessenger.presentation.screen.AuthDestination
@@ -32,7 +39,12 @@ class MainActivity : ComponentActivity() {
                 when (authState.value) {
                     is AuthState.NotAuthorized -> { AuthDestination(navigateState) }
                     is AuthState.Authorized -> { WinDiMainDestination(navigateState) }
-                    AuthState.Initial -> {}
+                    AuthState.Initial -> {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) { LinearProgressIndicator() }
+                    }
                 }
             }
         }

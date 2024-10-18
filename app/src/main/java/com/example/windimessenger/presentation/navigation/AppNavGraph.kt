@@ -4,13 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 
 @Composable
 fun AppNavGraph(
     navHostController: NavHostController,
     chatsScreenContent: @Composable () -> Unit,
     editProfileScreenContent: @Composable () -> Unit,
-    messagesScreenContent: @Composable () -> Unit,
+    messagesScreenContent: @Composable (Int) -> Unit,
     profileScreenContent: @Composable () -> Unit
 ) {
     NavHost(
@@ -22,7 +23,8 @@ fun AppNavGraph(
             chatsScreenContent()
         }
         composable<Screen.Messages> {
-            messagesScreenContent()
+            val chat: Screen.Messages = it.toRoute()
+            messagesScreenContent(chat.id)
         }
 
         composable<Screen.Profile> {

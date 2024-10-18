@@ -2,8 +2,8 @@ package com.example.windimessenger.data.mapper
 
 import com.example.windimessenger.data.model.response.CheckAuthResponseDto
 import com.example.windimessenger.data.model.response.AuthResponseDto
-import com.example.windimessenger.domain.entity.CheckAuthResponse
-import com.example.windimessenger.domain.entity.UserRegisterResponse
+import com.example.windimessenger.domain.entity.network.CheckAuthResponse
+import com.example.windimessenger.domain.entity.network.UserRegisterResponse
 
 fun CheckAuthResponseDto.toEntity() = CheckAuthResponse(
     refreshToken = refreshToken ?: "",

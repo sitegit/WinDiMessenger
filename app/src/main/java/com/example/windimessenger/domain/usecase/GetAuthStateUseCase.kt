@@ -1,7 +1,7 @@
 package com.example.windimessenger.domain.usecase
 
-import com.example.windimessenger.domain.AuthRepository
-import com.example.windimessenger.domain.entity.AuthState
+import com.example.windimessenger.domain.repository.AuthRepository
+import com.example.windimessenger.domain.entity.network.AuthState
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 

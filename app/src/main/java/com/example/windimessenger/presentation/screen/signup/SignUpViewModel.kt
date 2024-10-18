@@ -2,12 +2,11 @@ package com.example.windimessenger.presentation.screen.signup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.windimessenger.domain.entity.ApiResponse
-import com.example.windimessenger.domain.entity.Result
-import com.example.windimessenger.domain.entity.UserRegisterResponse
+import com.example.windimessenger.domain.entity.network.ApiResponse
+import com.example.windimessenger.domain.entity.network.Result
+import com.example.windimessenger.domain.entity.network.UserRegisterResponse
 import com.example.windimessenger.domain.usecase.CheckAuthStateUseCase
 import com.example.windimessenger.domain.usecase.RegisterUserUseCase
-import com.example.windimessenger.presentation.screen.login.LoginState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,7 +25,7 @@ class SignUpViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = SignUpState.Loading
 
-            when (val result:  Result<ApiResponse<UserRegisterResponse>> = registerUserUseCase(phone, name, username)) {
+            when (val result: Result<ApiResponse<UserRegisterResponse>> = registerUserUseCase(phone, name, username)) {
                 is Result.Success -> {
                     _uiState.value = SignUpState.Success
                 }
