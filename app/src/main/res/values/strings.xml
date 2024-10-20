@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">WinDi Messenger</string>
+    <string name="navigation_item_profile">Профиль</string>
+    <string name="navigation_item_chats">Чаты</string>
+    <string name="registration">Регистрация</string>
+    <string name="phone_label">Телефон: %1$s</string>
+    <string name="information_about_yourself">Заполните информацию о себе</string>
+    <string name="enter_name">Введите имя</string>
+    <string name="enter_username">"Введите никнейм (En): "</string>
+    <string name="enter">Войти</string>
+    <string name="change_data">Изменить данные</string>
+    <string name="logout_account">Выйти из аккаунта</string>
+    <string name="account">Аккаунт</string>
+    <string name="city">город проживания</string>
+    <string name="date_birth">дата рождения</string>
+    <string name="zodiac_sign">знак зодиака</string>
+    <string name="about">О себе</string>
+    <string name="information_available">Информация отсутствует</string>
+    <string name="update_data">Данные успешно обновлены</string>
+    <string name="avatar_jpg">avatar.jpg</string>
+    <string name="birthday">День рождения:</string>
+    <string name="date">дд.мм.гггг</string>
+    <string name="city_label">Город:</string>
+    <string name="city_placeholder">Город</string>
+    <string name="about_label">О себе:</string>
+    <string name="about_placeholder">О себе</string>
+    <string name="Incorrect_data">Введены некорректные данные</string>
+    <string name="apply_changes">Применить изменения</string>
+    <string name="selectImage">Нажмите, чтобы выбрать изображение</string>
+    <string name="search">Search</string>
+    <string name="clear">Clear</string>
+    <string name="name_of_the_country">Введите название страны</string>
+    <string name="enter_code">Введите код</string>
+    <string name="sms">Мы отправили SMS с кодом проверки на Ваш телефон %1$s</string>
 </resources>
