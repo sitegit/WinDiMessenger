@@ -1,14 +1,14 @@
-package com.example.windimessenger.domain.usecase
+package com.example.windimessenger.domain.usecase.chat
 
 import com.example.windimessenger.domain.entity.chat.Chat
 import com.example.windimessenger.domain.repository.ChatRepository
 import javax.inject.Inject
 
-class GetChatUseCase @Inject constructor(
+class GetChatListUseCase @Inject constructor(
     private val chatRepository: ChatRepository
 ) {
 
-    operator fun invoke(chatId: Int): Chat {
-        return chatRepository.getChat(chatId)
+    operator fun invoke(): List<Chat> {
+        return chatRepository.getChatList()
     }
 }

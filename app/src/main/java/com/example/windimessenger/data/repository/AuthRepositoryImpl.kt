@@ -2,13 +2,14 @@ package com.example.windimessenger.data.repository
 
 import android.util.Log
 import com.example.windimessenger.data.authentication.TokenManager
+import com.example.windimessenger.data.local.UserInfoManager
 import com.example.windimessenger.data.mapper.toEntity
-import com.example.windimessenger.data.model.request.CheckAuthCodeRequestDto
-import com.example.windimessenger.data.model.request.SendAuthCodeRequestDto
-import com.example.windimessenger.data.model.request.UserRegisterRequestDto
-import com.example.windimessenger.data.model.response.AuthResponseDto
-import com.example.windimessenger.data.model.response.CheckAuthResponseDto
-import com.example.windimessenger.data.model.response.SendAuthCodeResponseDto
+import com.example.windimessenger.data.model.auth.request.CheckAuthCodeRequestDto
+import com.example.windimessenger.data.model.auth.request.SendAuthCodeRequestDto
+import com.example.windimessenger.data.model.auth.request.UserRegisterRequestDto
+import com.example.windimessenger.data.model.auth.response.AuthResponseDto
+import com.example.windimessenger.data.model.auth.response.CheckAuthResponseDto
+import com.example.windimessenger.data.model.auth.response.SendAuthCodeResponseDto
 import com.example.windimessenger.data.network.AuthService
 import com.example.windimessenger.domain.repository.AuthRepository
 import com.example.windimessenger.domain.entity.network.ApiResponse
@@ -16,6 +17,7 @@ import com.example.windimessenger.domain.entity.network.AuthState
 import com.example.windimessenger.domain.entity.network.CheckAuthResponse
 import com.example.windimessenger.domain.entity.network.ErrorDetail
 import com.example.windimessenger.domain.entity.network.UserRegisterResponse
+import com.example.windimessenger.domain.entity.profile.UserInfo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -28,7 +30,8 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val authService: AuthService,
-    private val tokenManager: TokenManager
+    private val tokenManager: TokenManager,
+    private val userInfoManager: UserInfoManager
 ) : AuthRepository {
 
     private val checkAuthStateEvents = MutableSharedFlow<Unit>(replay = 1)
@@ -55,7 +58,10 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun registerUser(phone: String, name: String, username: String): ApiResponse<UserRegisterResponse> {
-        return handleApiCall { authService.registerUser(UserRegisterRequestDto(phone, name, username)) }
+        return handleApiCall {
+            userInfoManager.saveUser(UserInfo(phone = phone, username = username, name = name))
+            authService.registerUser(UserRegisterRequestDto(phone, name, username))
+        }
     }
 
     override fun getAuthStateFlow() = authStateFlow
@@ -65,6 +71,7 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun logout() {
+        userInfoManager.clearUserData()
         tokenManager.clearAllTokens()
         checkAuthStateEvents.emit(Unit)
     }

@@ -1,6 +1,5 @@
 package com.example.windimessenger.presentation.screen.login
 
-import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,14 +30,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.windimessenger.R
 import com.example.windimessenger.getApplicationComponent
-import com.example.windimessenger.presentation.theme.Typography
 import com.example.windimessenger.presentation.theme.InputDescription
+import com.example.windimessenger.presentation.theme.Typography
 import com.example.windimessenger.presentation.theme.showToast
 
 @Composable
@@ -56,16 +57,19 @@ fun VerifyScreen(
             .imePadding(),
         verticalArrangement = Arrangement.Center
     ) {
-        InputDescription(title = "Введите код", style = Typography.titleLarge)
+        InputDescription(title = stringResource(R.string.enter_code), style = Typography.titleLarge)
         InputDescription(
-            title = "Мы отправили SMS с кодом проверки на Ваш телефон $phoneNumber",
+            title = stringResource(R.string.sms, phoneNumber),
             style = Typography.bodyLarge
         )
         OtpTextField {
             viewModel.checkAuthUser(phoneNumber, it)
         }
         Box(
-            modifier = Modifier.fillMaxWidth().height(20.dp).padding(top = 16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(20.dp)
+                .padding(top = 16.dp),
             contentAlignment = Alignment.Center
         ) {
             if (state is LoginState.Loading) {
@@ -104,7 +108,6 @@ private fun ColumnScope.OtpTextField(
         ),
         keyboardActions = KeyboardActions(
             onDone = {
-                Log.i("okHttp", "1isfdfd")
                 if (otpValue.length == 6) onOtpComplete(otpValue)
             }
         ),
@@ -118,7 +121,6 @@ private fun ColumnScope.OtpTextField(
                     OtpTextFieldElement(char)
 
                     if (index < 5) {
-                        Log.i("MyTag", index.toString())
                         Spacer(modifier = Modifier.width(8.dp)) }
                 }
             }

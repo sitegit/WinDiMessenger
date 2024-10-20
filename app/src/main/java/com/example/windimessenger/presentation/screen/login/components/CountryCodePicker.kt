@@ -67,7 +67,5 @@ fun CountryCodePicker(
                 backgroundColor = backgroundColor
             )
         }
-
     }
-
 }

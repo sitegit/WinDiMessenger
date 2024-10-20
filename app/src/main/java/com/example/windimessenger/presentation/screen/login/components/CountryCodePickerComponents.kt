@@ -24,10 +24,12 @@ import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.example.windimessenger.R
 import com.example.windimessenger.presentation.utils.Country
 
 @Composable
@@ -70,12 +72,12 @@ fun CountrySearch(
             Text(text = hint)
         },
         leadingIcon = {
-            Icon(Icons.Outlined.Search, contentDescription = "Search")
+            Icon(Icons.Outlined.Search, contentDescription = stringResource(R.string.search))
         },
         trailingIcon = {
             if (showClearIcon && value.isNotEmpty()) {
                 IconButton(onClick = { onValueChange("") }) {
-                    Icon(Icons.Outlined.Clear, contentDescription = "Clear")
+                    Icon(Icons.Outlined.Clear, contentDescription = stringResource(R.string.clear))
                 }
             }
         }

@@ -1,6 +1,5 @@
 package com.example.windimessenger.presentation.screen.chat
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,14 +19,12 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material.icons.filled.Factory
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -35,22 +32,52 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.windimessenger.domain.entity.chat.Chat
 import com.example.windimessenger.getApplicationComponent
 import com.example.windimessenger.presentation.theme.Typography
+import com.example.windimessenger.presentation.theme.showToast
 
 @Composable
 fun MessagesScreen(
     chatId: Int,
     paddingValues: PaddingValues,
-    onBackPressedListener: () -> Unit,
     viewModel: ChatViewModel = viewModel(factory = getApplicationComponent().getViewModelFactory())
 ) {
+    val state = viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
     val chat = viewModel.getChat(chatId)
-    val listState = rememberLazyListState()
+
+    when (val currentState = state.value) {
+        is MessageState.Error -> { showToast(context, currentState.message) }
+        MessageState.Idle -> {}
+        MessageState.Loading -> {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                LinearProgressIndicator()
+            }
+        }
+        is MessageState.Success -> {
+            MessagesScreenContent(
+                username = currentState.data.username,
+                chat = chat,
+                paddingValues = paddingValues
+            )
+        }
+    }
+}
+
+@Composable
+fun MessagesScreenContent(
+    username: String,
+    chat: Chat,
+    paddingValues: PaddingValues
+) {
     val maxWidth = (LocalConfiguration.current.screenWidthDp * 0.8).dp
+    val listState = rememberLazyListState()
 
     LaunchedEffect(chat.messages) {
         if (chat.messages.isNotEmpty()) listState.animateScrollToItem(chat.messages.size - 1)
@@ -75,7 +102,7 @@ fun MessagesScreen(
                 items = chat.messages,
                 key = { it.id }
             ) { message ->
-                val name = if (message.isSendByUser) "User" else chat.name
+                val name = if (message.isSendByUser) username else chat.name
                 MessageCard(name, message.content, message.isSendByUser, maxWidth)
             }
         }

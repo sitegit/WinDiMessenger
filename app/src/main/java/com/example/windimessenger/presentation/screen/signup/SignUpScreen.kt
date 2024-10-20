@@ -22,10 +22,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.windimessenger.R
 import com.example.windimessenger.getApplicationComponent
-import com.example.windimessenger.presentation.screen.login.LoginState
 import com.example.windimessenger.presentation.theme.InputDescription
 import com.example.windimessenger.presentation.theme.Typography
 import com.example.windimessenger.presentation.theme.showToast
@@ -45,7 +46,7 @@ fun SignUpScreen(
             .imePadding()
     ) {
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-            Text(text = "Регистрация", style = Typography.titleLarge)
+            Text(text = stringResource(R.string.registration), style = Typography.titleLarge)
         }
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -54,11 +55,19 @@ fun SignUpScreen(
             var name by rememberSaveable { mutableStateOf("") }
             var username by rememberSaveable { mutableStateOf("") }
 
-            InputDescription(title = "Телефон: $phoneNumber", style = Typography.titleLarge)
-            InputDescription(title = "Заполните информацию о себе", style = Typography.bodyLarge)
+            InputDescription(
+                title = stringResource(R.string.phone_label, phoneNumber),
+                style = Typography.titleLarge
+            )
+            InputDescription(
+                title = stringResource(R.string.information_about_yourself),
+                style = Typography.bodyLarge
+            )
 
-            RegistrationTextField(text = name, label = "Введите имя") { name = it }
-            RegistrationTextField(text = username, label = "Введите никнейм", isUserName = true) { username = it }
+            RegistrationTextField(text = name, label = stringResource(R.string.enter_name)) { name = it }
+            RegistrationTextField(
+                text = username, label = stringResource(R.string.enter_username), isUserName = true
+            ) { username = it }
             RegisterButton(name = name, username = username) {
                 viewModel.registerUser(phoneNumber, name, username)
             }
@@ -84,10 +93,11 @@ private fun RegisterButton(
         enabled = name.length > 2 && username.length > 4,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 32.dp, start = 16.dp, end = 16.dp).height(50.dp),
+            .padding(top = 32.dp, start = 16.dp, end = 16.dp)
+            .height(50.dp),
         shape = RoundedCornerShape(10.dp)
     ) {
-        Text(text = "Войти", style = Typography.titleLarge)
+        Text(text = stringResource(R.string.enter), style = Typography.titleLarge)
     }
 }
 
@@ -108,7 +118,9 @@ private fun RegistrationTextField(
                 onChangedText(newText)
             }
         },
-        modifier = Modifier.fillMaxWidth().padding(16.dp, 4.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp, 4.dp),
         shape = RoundedCornerShape(10.dp),
         singleLine = true,
         label = {

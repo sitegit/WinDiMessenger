@@ -1,4 +1,4 @@
-package com.example.windimessenger.data.model.response
+package com.example.windimessenger.data.model.auth.response
 
 import com.google.gson.annotations.SerializedName
 

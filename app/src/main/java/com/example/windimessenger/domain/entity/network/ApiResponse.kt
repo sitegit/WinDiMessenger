@@ -10,6 +10,4 @@ sealed class ApiResponse<out T> {
     @Serializable
     data class Error(val detail: ErrorDetail) : ApiResponse<Nothing>()
 
-//    @Serializable
-//    data class NotFound(val message: String) : ApiResponse<Nothing>()
 }

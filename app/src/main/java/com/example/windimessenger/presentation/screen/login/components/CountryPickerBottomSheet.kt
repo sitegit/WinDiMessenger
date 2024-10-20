@@ -22,8 +22,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import com.example.windimessenger.R
 import com.example.windimessenger.presentation.utils.Country
 import kotlinx.coroutines.launch
 
@@ -75,7 +77,7 @@ fun CountryPickerBottomSheet(
                 CountrySearch(value = value,
                     onValueChange = { value = it },
                     textStyle = textStyle,
-                    hint = "Введите название страны",
+                    hint = stringResource(R.string.name_of_the_country),
                     showClearIcon = true,
                     onFocusChanged = {
                         if (it.hasFocus) {
@@ -102,13 +104,8 @@ fun CountryPickerBottomSheet(
                             showCountryFlag = true,
                         )
                     }
-
                 }
-
             }
-
         }
-
     }
-
 }

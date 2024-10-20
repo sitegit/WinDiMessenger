@@ -1,5 +1,6 @@
 package com.example.windimessenger.data.authentication
 
+import com.example.windimessenger.data.model.RefreshTokenRequest
 import com.example.windimessenger.data.network.RefreshTokenService
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
@@ -22,7 +23,10 @@ class AuthAuthenticator @Inject constructor(
                 tokenManager.getAccessJwt()
             }
             val token = if (currentToken != updatedToken) updatedToken else {
-                val newSessionResponse = runBlocking { refreshTokenService.refreshToken() }
+                val newSessionResponse = runBlocking {
+                    val refreshToken = tokenManager.getRefreshJwt() ?: ""
+                    refreshTokenService.refreshToken(RefreshTokenRequest(refreshToken))
+                }
                 if (newSessionResponse.isSuccessful && newSessionResponse.body() != null) {
                     newSessionResponse.body()?.let { body ->
                         runBlocking {

@@ -1,11 +1,11 @@
 package com.example.windimessenger.data.network
 
-import com.example.windimessenger.data.model.request.CheckAuthCodeRequestDto
-import com.example.windimessenger.data.model.response.CheckAuthResponseDto
-import com.example.windimessenger.data.model.request.SendAuthCodeRequestDto
-import com.example.windimessenger.data.model.response.SendAuthCodeResponseDto
-import com.example.windimessenger.data.model.request.UserRegisterRequestDto
-import com.example.windimessenger.data.model.response.AuthResponseDto
+import com.example.windimessenger.data.model.auth.request.CheckAuthCodeRequestDto
+import com.example.windimessenger.data.model.auth.response.CheckAuthResponseDto
+import com.example.windimessenger.data.model.auth.request.SendAuthCodeRequestDto
+import com.example.windimessenger.data.model.auth.response.SendAuthCodeResponseDto
+import com.example.windimessenger.data.model.auth.request.UserRegisterRequestDto
+import com.example.windimessenger.data.model.auth.response.AuthResponseDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST

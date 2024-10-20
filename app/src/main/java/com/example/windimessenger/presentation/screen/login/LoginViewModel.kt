@@ -1,14 +1,13 @@
 package com.example.windimessenger.presentation.screen.login
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.windimessenger.domain.usecase.CheckAuthUseCase
-import com.example.windimessenger.domain.usecase.SendAuthCodeUseCase
 import com.example.windimessenger.domain.entity.network.ApiResponse
 import com.example.windimessenger.domain.entity.network.CheckAuthResponse
 import com.example.windimessenger.domain.entity.network.Result
-import com.example.windimessenger.domain.usecase.CheckAuthStateUseCase
+import com.example.windimessenger.domain.usecase.auth.CheckAuthStateUseCase
+import com.example.windimessenger.domain.usecase.auth.CheckAuthUseCase
+import com.example.windimessenger.domain.usecase.auth.SendAuthCodeUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -49,11 +48,9 @@ class LoginViewModel @Inject constructor(
             when (val result: Result<ApiResponse<CheckAuthResponse>> = checkAuthUseCase(phone, code)) {
                 is Result.Success -> {
                     val data = result.data as ApiResponse.Success<CheckAuthResponse>
-                    Log.i( "MyTag", " -------------------${data.data.isUserExists}")
                     _uiState.value = LoginState.Success(data.data.isUserExists, phone)
                 }
                 is Result.Error -> {
-                    Log.i( "MyTag", result.message)
                     _uiState.value = LoginState.Error(result.message)
                 }
             }

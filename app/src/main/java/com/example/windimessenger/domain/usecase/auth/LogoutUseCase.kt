@@ -1,4 +1,4 @@
-package com.example.windimessenger.domain.usecase
+package com.example.windimessenger.domain.usecase.auth
 
 import com.example.windimessenger.domain.repository.AuthRepository
 import javax.inject.Inject

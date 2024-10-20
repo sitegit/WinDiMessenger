@@ -1,16 +1,18 @@
 package com.example.windimessenger.presentation.screen
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -48,8 +50,7 @@ fun WinDiMainDestination(
             messagesScreenContent = {
                 MessagesScreen(
                     chatId = it,
-                    paddingValues = paddingValues,
-                    onBackPressedListener = {}
+                    paddingValues = paddingValues
                 )
             },
             profileScreenContent = {
@@ -59,7 +60,7 @@ fun WinDiMainDestination(
                 )
             },
             editProfileScreenContent = {
-                EditProfileScreen(paddingValues = paddingValues) { }
+                EditProfileScreen(paddingValues = paddingValues)
                 BackHandler { navigateState.navigateTo(Screen.Profile) }
             }
         )
@@ -71,7 +72,9 @@ private fun AppBottomNavigation(
     navigateState: NavigationState,
     navBackStackEntry: NavBackStackEntry?
 ) {
-    NavigationBar {
+    NavigationBar(
+        modifier = Modifier.height(56.dp)
+    ) {
 
         val items = listOf(
             NavigationItem.Chats,
@@ -92,15 +95,12 @@ private fun AppBottomNavigation(
                 icon = {
                     Icon(item.icon, contentDescription = null)
                 },
-                label = {
-                    Text(text = stringResource(id = item.titleResId))
-                },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = MaterialTheme.colorScheme.onPrimary,
+                    selectedIconColor = MaterialTheme.colorScheme.primary,
+                    unselectedIconColor = Color.Gray,
                     selectedTextColor = MaterialTheme.colorScheme.onPrimary,
-                    unselectedIconColor = MaterialTheme.colorScheme.onSecondary,
-                    unselectedTextColor = MaterialTheme.colorScheme.onSecondary,
-                    indicatorColor = MaterialTheme.colorScheme.secondary
+                    unselectedTextColor = MaterialTheme.colorScheme.onPrimary,
+                    indicatorColor = Color.Transparent
                 )
             )
         }

@@ -54,6 +54,7 @@ android {
 
 dependencies {
 
+    implementation(libs.coil.compose)
     implementation(libs.javafaker)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.logging.interceptor)

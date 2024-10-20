@@ -10,9 +10,12 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import com.example.windimessenger.data.repository.AuthRepositoryImpl
 import com.example.windimessenger.data.authentication.TokenManager
 import com.example.windimessenger.data.local.ChatsGenerator
+import com.example.windimessenger.data.local.UserInfoManager
 import com.example.windimessenger.data.repository.ChatRepositoryImpl
+import com.example.windimessenger.data.repository.ProfileRepositoryImpl
 import com.example.windimessenger.domain.repository.AuthRepository
 import com.example.windimessenger.domain.repository.ChatRepository
+import com.example.windimessenger.domain.repository.ProfileRepository
 import com.github.javafaker.Faker
 import dagger.Binds
 import dagger.Module
@@ -29,6 +32,10 @@ interface DataModule {
     @Singleton
     @Binds
     fun bindChatRepository(chatRepositoryImpl: ChatRepositoryImpl): ChatRepository
+
+    @Singleton
+    @Binds
+    fun bindProfileRepository(profileRepositoryImpl: ProfileRepositoryImpl): ProfileRepository
 
     companion object {
 
@@ -47,6 +54,12 @@ interface DataModule {
         @Provides
         fun provideTokenManager(dataStore: DataStore<Preferences>): TokenManager {
             return TokenManager(dataStore)
+        }
+
+        @Singleton
+        @Provides
+        fun provideUserInfoManager(dataStore: DataStore<Preferences>): UserInfoManager {
+            return UserInfoManager(dataStore)
         }
 
         @Singleton
