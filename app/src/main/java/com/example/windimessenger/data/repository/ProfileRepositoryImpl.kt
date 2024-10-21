@@ -32,7 +32,7 @@ class ProfileRepositoryImpl @Inject constructor(
                     val response = userService.getUserInfo()
                     if (response.isSuccessful) {
                         response.body()?.let { userInfoDto ->
-                            val avatarUrl = "https://plannerok.ru/${userInfoDto.profileDataDto.avatarsDto.avatar}"
+                            val avatarUrl = "https://plannerok.ru/${userInfoDto.profileDataDto.avatarsDto?.avatar}"
                             val userInfo = userInfoDto.toEntity().copy(avatarUri = avatarUrl)
                             userInfoManager.saveUser(userInfo)
                             emit(ApiResponse.Success(userInfo))
@@ -52,7 +52,6 @@ class ProfileRepositoryImpl @Inject constructor(
         )
 
         return if (response.isSuccessful) {
-            Log.i("MyTag", "sdfdf")
             userInfoManager.saveUser(userRequest.toUserInfo())
             ApiResponse.Success(true)
         } else {

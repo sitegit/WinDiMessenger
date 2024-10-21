@@ -25,7 +25,6 @@ class UserInfoManager @Inject constructor(
 
     val userFlow: Flow<UserInfo> = dataStore.data
         .map { preferences ->
-            Log.i("MyTag", "Get avatarUrl: ${preferences[userAvatarUrl]}")
             UserInfo(
                 avatarUrl = preferences[userAvatarUrl] ?: "",
                 avatarUri = preferences[userAvatarUri] ?: "",
@@ -40,7 +39,6 @@ class UserInfoManager @Inject constructor(
 
     suspend fun saveUser(partialUser: UserInfo) {
         dataStore.edit { preferences ->
-            Log.i("MyTag", "Saving avatarUrl: ${partialUser.avatarUrl}")
             partialUser.avatarUrl.takeIf { it.isNotBlank() }?.let { preferences[userAvatarUrl] = it }
             partialUser.birthday.takeIf { it.isNotBlank() }?.let { preferences[userBirthday] = it }
             partialUser.city.takeIf { it.isNotBlank() }?.let { preferences[userCity] = it }

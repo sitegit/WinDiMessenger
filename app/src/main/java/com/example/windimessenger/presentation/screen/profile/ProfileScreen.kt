@@ -112,7 +112,9 @@ private fun UserInfoContent(
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = userName, style = Typography.titleLarge)
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "+$phone", style = Typography.bodyLarge)
+
+        val phoneNumber = if (!phone.startsWith("+")) "+$phone" else phone
+        Text(text = phoneNumber, style = Typography.bodyLarge)
         Spacer(modifier = Modifier.height(8.dp))
         HorizontalDivider(color = Color.LightGray, thickness = 1.dp)
         UserInfoCard(info = city, description = stringResource(R.string.city))

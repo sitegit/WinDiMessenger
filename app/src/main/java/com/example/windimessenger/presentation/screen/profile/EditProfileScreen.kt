@@ -3,6 +3,7 @@ package com.example.windimessenger.presentation.screen.profile
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -90,7 +91,7 @@ fun EditScreenContent(
 ) {
     var fileName by rememberSaveable { mutableStateOf("") }
     var imageBase64 by rememberSaveable { mutableStateOf("") }
-    var imageUrl by rememberSaveable { mutableStateOf(user.avatarUrl) }
+    var imageUrl by rememberSaveable { mutableStateOf(user.avatarUri) }
     var birthday by rememberSaveable {
         mutableStateOf(viewModel.formatDateToClientFormat(user.birthday))
     }

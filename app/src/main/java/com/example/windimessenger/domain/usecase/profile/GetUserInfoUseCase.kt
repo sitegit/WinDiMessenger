@@ -1,5 +1,6 @@
 package com.example.windimessenger.domain.usecase.profile
 
+import android.util.Log
 import com.example.windimessenger.domain.entity.network.ApiResponse
 import com.example.windimessenger.domain.entity.network.Result
 import com.example.windimessenger.domain.entity.network.Result.Error
@@ -18,11 +19,12 @@ class GetUserInfoUseCase @Inject constructor(
         return profileRepository.getUserFlow()
             .map { apiResponse ->
                 when (apiResponse) {
-                    is ApiResponse.Error -> Error(message = apiResponse.detail.message)
+                    is ApiResponse.Error -> { Error(message = apiResponse.detail.message) }
                     is ApiResponse.Success -> Result.Success(apiResponse.data)
-                    is ApiResponse.ValidationError -> Error(message = apiResponse.detail[0].msg)
+                    is ApiResponse.ValidationError -> { Error(message = apiResponse.detail[0].msg) }
                 }
             }.catch { error ->
+                Log.i("MyTag", error.message.toString())
                 emit(Error(message = error.message ?: "Unknown error occurred"))
             }
     }

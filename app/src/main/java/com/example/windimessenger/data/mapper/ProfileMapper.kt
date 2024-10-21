@@ -7,7 +7,7 @@ import com.example.windimessenger.domain.entity.profile.UserRequest
 import com.example.windimessenger.domain.entity.profile.UserInfo
 
 fun UserResponseDto.toEntity() = UserInfo(
-    avatarUrl = profileDataDto.avatarsDto.avatar ?: "",
+    avatarUrl = profileDataDto.avatarsDto?.avatar ?: "",
     birthday = profileDataDto.birthday ?: "",
     city = profileDataDto.city ?: "",
     phone = profileDataDto.phone ?: "",
