@@ -3,7 +3,6 @@ package com.example.windimessenger.presentation.screen.profile
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -11,7 +10,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -49,7 +47,6 @@ import com.example.windimessenger.presentation.theme.showToast
 
 @Composable
 fun EditProfileScreen(
-    paddingValues: PaddingValues,
     viewModel: ProfileViewModel = viewModel(factory = getApplicationComponent().getViewModelFactory())
 ) {
     val context = LocalContext.current
@@ -65,7 +62,7 @@ fun EditProfileScreen(
             }
         }
         is ProfileState.Success -> {
-            EditScreenContent(context, currentState.data, viewModel, paddingValues)
+            EditScreenContent(context, currentState.data, viewModel)
         }
     }
 
@@ -86,8 +83,7 @@ fun EditProfileScreen(
 fun EditScreenContent(
     context: Context,
     user: UserInfo,
-    viewModel: ProfileViewModel,
-    paddingValues: PaddingValues
+    viewModel: ProfileViewModel
 ) {
     var fileName by rememberSaveable { mutableStateOf("") }
     var imageBase64 by rememberSaveable { mutableStateOf("") }
@@ -101,7 +97,6 @@ fun EditScreenContent(
 
     Column(
         modifier = Modifier
-            .padding(paddingValues)
             .imePadding()
     ) {
         ImagePicker(

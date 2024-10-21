@@ -45,7 +45,6 @@ import com.example.windimessenger.presentation.theme.showToast
 @Composable
 fun MessagesScreen(
     chatId: Int,
-    paddingValues: PaddingValues,
     viewModel: ChatViewModel = viewModel(factory = getApplicationComponent().getViewModelFactory())
 ) {
     val state = viewModel.uiState.collectAsStateWithLifecycle()
@@ -63,8 +62,7 @@ fun MessagesScreen(
         is MessageState.Success -> {
             MessagesScreenContent(
                 username = currentState.data.username,
-                chat = chat,
-                paddingValues = paddingValues
+                chat = chat
             )
         }
     }
@@ -73,8 +71,7 @@ fun MessagesScreen(
 @Composable
 fun MessagesScreenContent(
     username: String,
-    chat: Chat,
-    paddingValues: PaddingValues
+    chat: Chat
 ) {
     val maxWidth = (LocalConfiguration.current.screenWidthDp * 0.8).dp
     val listState = rememberLazyListState()
@@ -84,7 +81,7 @@ fun MessagesScreenContent(
     }
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(paddingValues).imePadding(),
+        modifier = Modifier.fillMaxSize().imePadding(),
         verticalArrangement = Arrangement.Bottom
     ) {
         LazyColumn(

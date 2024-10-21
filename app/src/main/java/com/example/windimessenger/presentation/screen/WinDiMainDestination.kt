@@ -1,6 +1,10 @@
 package com.example.windimessenger.presentation.screen
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -9,7 +13,9 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -30,13 +36,26 @@ fun WinDiMainDestination(
     navigateState: NavigationState
 ) {
     val navBackStackEntry by navigateState.navHostController.currentBackStackEntryAsState()
-    val showBottomBar = navBackStackEntry?.destination?.hierarchy?.any {
-        it.route == Screen.Chats::class.qualifiedName || it.route == Screen.Profile::class.qualifiedName
-    } ?: false
+    val showBottomBar by remember {
+        derivedStateOf {
+            navBackStackEntry?.destination?.hierarchy?.any {
+                it.route == Screen.Chats::class.qualifiedName || it.route == Screen.Profile::class.qualifiedName
+            } ?: false
+        }
+    }
+
+    val bottomBarState = remember { MutableTransitionState(showBottomBar) }
+    bottomBarState.targetState = showBottomBar
 
     Scaffold(
         bottomBar = {
-            if (showBottomBar) AppBottomNavigation(navigateState, navBackStackEntry)
+            AnimatedVisibility(
+                visibleState = bottomBarState,
+                enter = slideInVertically(initialOffsetY = { it }),
+                exit = slideOutVertically(targetOffsetY = { it })
+            ) {
+                AppBottomNavigation(navigateState, navBackStackEntry)
+            }
         }
     ) { paddingValues ->
         AppNavGraph(
@@ -49,8 +68,7 @@ fun WinDiMainDestination(
             },
             messagesScreenContent = {
                 MessagesScreen(
-                    chatId = it,
-                    paddingValues = paddingValues
+                    chatId = it
                 )
             },
             profileScreenContent = {
@@ -60,7 +78,7 @@ fun WinDiMainDestination(
                 )
             },
             editProfileScreenContent = {
-                EditProfileScreen(paddingValues = paddingValues)
+                EditProfileScreen()
                 BackHandler { navigateState.navigateTo(Screen.Profile) }
             }
         )
